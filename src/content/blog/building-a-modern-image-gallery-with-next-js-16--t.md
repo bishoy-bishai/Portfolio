@@ -1,30 +1,10 @@
-# REVIEW: Building a Modern Image Gallery with Next.js 16, TypeScript & Unsplash API
+---
+title: "Building a Modern Image Gallery with Next.js 16, TypeScript & Unsplash API"
+description: "Building a Modern Image Gallery: Next.js 16, TypeScript, and Unsplash..."
+pubDate: "Dec 12 2025"
+heroImage: "../../assets/building-a-modern-image-gallery-with-next-js-16--t.jpg"
+---
 
-## 🎥 Video Script
-(Opening with a sleek animation of code transforming into an elegant image grid)
-
-"Hey everyone, Bishoy Bishai here. For over a decade, I've seen countless frontend projects grapple with a deceptively simple challenge: building a truly *modern* image gallery. It sounds straightforward, right? Fetch some images, display them. But the reality is often a slow, unoptimized, SEO-unfriendly mess, especially at scale. I’ve personally debugged image performance issues that shaved seconds off load times, translating directly into millions in lost revenue or user churn.
-
-The traditional approach, often involving heavy client-side rendering and manual optimization, is a relic. We need something more robust, more performant, and inherently scalable. That's why I'm excited to share a blueprint leveraging Next.js 16, TypeScript, and the Unsplash API.
-
-This isn't just about showing off new tech; it's about solving real-world problems. Think about instantaneous initial loads thanks to Next.js Server Components, pixel-perfect responsiveness with the Next/Image component, and bulletproof API interactions enforced by TypeScript. We're moving beyond mere display to an architecture that's a joy to build and a dream for end-users. This combination isn't just a trend; it's a strategic move for any serious application demanding high performance and maintainability."
-
-## 🐦 Expert Thread
-1/7 🧵 **The "simple" image gallery is often a performance black hole.** Traditional approaches lead to slow loads, bad SEO, and frustrating UX. But what if we could build one that was *blazing fast* by default? Let's talk Next.js 16. #Nextjs #Frontend #WebPerf
-
-2/7 **Enter Next.js 16, TypeScript, & Unsplash API.** This stack isn't just about showing off new tech; it's a strategic move to solve real-world problems. Think instant initial loads, robust data contracts, and pixel-perfect images.
-
-3/7 **The secret weapon? Next.js Server Components.** Fetching data and rendering directly on the server means zero client-side hydration for initial content. Your gallery is there instantly, benefiting SEO and Core Web Vitals. No more spinner purgatory. 🚀
-
-4/7 **But what about the images themselves? `next/image` is your MVP.** It handles responsive images, lazy loading, and intelligent optimization (WebP conversion, anyone?) automatically. Specifying `width` & `height` + `sizes` is crucial to avoid CLS. Don't skip it! #ImageOptimization
-
-5/7 **TypeScript + Unsplash API = Developer Nirvana.** Define your Unsplash types once, and your entire application benefits from strong type checking. Catch API contract errors at compile time, not runtime. No more `undefined` nightmares. 🛡️
-
-6/7 **Architectural insight:** Combine Server Components for fetching and initial rendering with `next/image` for asset delivery. Use `fetch` with `revalidate` options for smart caching and ISR. This isn't just fast; it's resilient and scalable.
-
-7/7 This isn't just a gallery; it's a blueprint for modern web development. Leveraging Next.js 16, TypeScript, and thoughtful API integration, we build for performance, maintainability, and an unmatched user experience. What's your go-to strategy for image-heavy apps? #FrontendEngineering #TypeScript
-
-## 📝 Blog Post
 # Building a Modern Image Gallery: Next.js 16, TypeScript, and Unsplash API
 
 As a Senior Frontend Engineer who has navigated the complexities of web development for over a decade, I've seen firsthand how seemingly simple features like an image gallery can become performance bottlenecks and maintenance nightmares. The modern web demands more: instant load times, flawless responsiveness, robust data handling, and an excellent developer experience. This article outlines a battle-tested approach to building a performant, scalable, and type-safe image gallery using Next.js 16, TypeScript, and the Unsplash API.
