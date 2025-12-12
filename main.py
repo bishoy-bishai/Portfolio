@@ -29,6 +29,41 @@ REVIEW_DOC = "review_copy.md"
 CONTENT_DIR = "src/content/blog"
 ASSETS_DIR = "src/assets"
 
+# Tech-to-visual mapping for image generation
+TECH_VISUALS = {
+    "react": "atomic orbital rings component tree blue cyan",
+    "nextjs": "flowing routes server client N letter pattern vercel",
+    "typescript": "type annotations structured blocks blue strict",
+    "javascript": "yellow curly braces dynamic scripting",
+    "tailwind": "utility classes responsive grid color palette wind",
+    "tailwindcss": "utility classes responsive grid color palette wind",
+    "css": "cascading layers styling sheets selectors",
+    "redux": "single store state flow unidirectional arrows",
+    "graphql": "query nodes connected graph pink purple",
+    "nodejs": "green hexagon server runtime event loop",
+    "vite": "lightning fast bundler purple gradient speed",
+    "webpack": "module bundler blue cube dependencies",
+    "hooks": "fishing hook state lifecycle useEffect useState",
+    "components": "building blocks modular reusable pieces",
+    "api": "endpoints request response arrows data flow",
+    "testing": "checkmarks green test tubes quality assurance",
+    "performance": "speedometer lightning optimization rocket"
+}
+
+def get_tech_style(primary_tech):
+    """Get visual keywords for a given technology."""
+    tech_key = primary_tech.lower().replace(" ", "").replace(".", "").replace("-", "")
+    return TECH_VISUALS.get(tech_key, "code symbols programming developer")
+
+def build_image_url(primary_tech, title, img_prompt):
+    """Build a tech-specific image URL for Pollinations."""
+    clean_prompt = re.sub(r'[^\w\s]', '', img_prompt)[:100]
+    tech_style = get_tech_style(primary_tech)
+    base_style = "dark%20background%20black%20gold%20accent%20minimalist%20abstract%20professional%20elegant"
+    tech_keywords = tech_style.replace(' ', '%20')
+    topic_words = re.sub(r'[^\w\s]', '', title)[:40].replace(' ', '%20')
+    return f"https://image.pollinations.ai/prompt/{base_style}%20{tech_keywords}%20{topic_words}%20{clean_prompt.replace(' ', '%20')}?width=1200&height=630"
+
 # --- Helpers ---
 def run_git_commands(commit_msg):
     try:
@@ -138,7 +173,12 @@ def run_draft_mode(is_retry=False):
         - Use "I've found...", "In my experience...", "Here's the thing..."
         - Share lessons learned from real projects
         
-        Generate 4 parts. Use STRICT separators.
+        Generate 5 parts. Use STRICT separators.
+        
+        0. PRIMARY_TECH (IMPORTANT - single word):
+           - Identify the MAIN technology/framework from the topic
+           - Examples: "React", "NextJS", "TypeScript", "TailwindCSS", "NodeJS", "GraphQL", "Redux", "Vite"
+           - Just output the single tech name, nothing else
         
         1. VIDEO SCRIPT (200 words):
            - Warm, confident narrator voice — like explaining to a friend
@@ -146,11 +186,20 @@ def run_draft_mode(is_retry=False):
            - Share a quick story or "aha moment" from real experience
            - End with actionable takeaway
         
-        2. VISUAL PROMPT:
+        2. VISUAL PROMPT (for image generation):
+           - MUST represent the specific technology/concept from the topic
            - Dark background (#1A1A1A) with gold accents (#C9A227)
-           - Minimalist, abstract tech illustration
-           - Clean geometric shapes, no text
-           - Professional, elegant aesthetic
+           - Include visual elements that symbolize the PRIMARY_TECH:
+             * React: atomic structures, orbital rings, component trees
+             * Next.js: flowing routes, server/client split visuals, N-shaped patterns
+             * TypeScript: type annotations, structured blocks, blue accents
+             * CSS/Tailwind: layered styling sheets, color palettes, responsive grids
+             * State Management: interconnected nodes, data flow arrows
+             * Performance: speedometer, lightning bolts, optimization graphs
+           - Include abstract representations of the TOPIC concept (hooks, components, routing, etc.)
+           - Minimalist but MEANINGFUL - the image should tell what the article is about
+           - NO text, NO logos, but recognizable tech symbolism
+           - Professional, elegant, developer-focused aesthetic
         
         3. BLOG POST (Markdown, 800-1200 words):
            - Hook: Start with a relatable problem or story
@@ -170,10 +219,12 @@ def run_draft_mode(is_retry=False):
            - End with a thought-provoking question or bold statement
         
         OUTPUT FORMAT:
+        ===PRIMARY_TECH===
+        (Single word: React, NextJS, TypeScript, etc.)
         ===SCRIPT===
         (Text)
         ===PROMPT===
-        (Text)
+        (Text - detailed visual description representing the tech and topic)
         ===BLOG===
         (Text)
         ===TWEETS===
@@ -188,14 +239,16 @@ def run_draft_mode(is_retry=False):
             m = re.search(p, t, re.DOTALL)
             return m.group(1).strip() if m else "Missing"
 
+        primary_tech = extract(raw, "===PRIMARY_TECH===", "===SCRIPT===")
         script = extract(raw, "===SCRIPT===", "===PROMPT===")
         prompt_txt = extract(raw, "===PROMPT===", "===BLOG===")
         blog = extract(raw, "===BLOG===", "===TWEETS===")
         tweets = extract(raw, "===TWEETS===", None)
         
-        # Save Draft
+        # Save Draft with primary_tech
         draft_data = {
             "title": topic['title'], "link": topic['link'],
+            "primary_tech": primary_tech,
             "script": script, "img_prompt": prompt_txt,
             "blog": blog, "tweets": tweets
         }
@@ -203,13 +256,11 @@ def run_draft_mode(is_retry=False):
         with open(DRAFT_FILE, 'w', encoding='utf-8') as f: json.dump(draft_data, f, indent=2)
         
         # Create Review Doc
-        review_content = f"# REVIEW: {topic['title']}\n\n## 🎥 Video Script\n{script}\n\n## 🐦 Expert Thread\n{tweets}\n\n## 📝 Blog Post\n{blog}"
+        review_content = f"# REVIEW: {topic['title']}\n\n**Primary Tech:** {primary_tech}\n\n## 🎥 Video Script\n{script}\n\n## 🖼️ Image Prompt\n{prompt_txt}\n\n## 🐦 Expert Thread\n{tweets}\n\n## 📝 Blog Post\n{blog}"
         with open(REVIEW_DOC, 'w', encoding='utf-8') as f: f.write(review_content)
         
-        # Generate Temp Image for Review (matching portfolio dark/gold theme)
-        clean_prompt = re.sub(r'[^\w\s]', '', prompt_txt)[:120]
-        style = "dark%20background%20black%20gold%20accent%20minimalist%20abstract%20geometric%20tech%20illustration"
-        temp_img_url = f"https://image.pollinations.ai/prompt/{style}%20{clean_prompt.replace(' ', '%20')}?width=1200&height=630"
+        # Generate Temp Image for Review (tech-specific + dark/gold theme)
+        temp_img_url = build_image_url(primary_tech, topic['title'], prompt_txt)
         
         # Send to Telegram
         send_telegram(f"🖼️ **Proposed Cover:** {temp_img_url}")
@@ -240,12 +291,10 @@ def run_publish_mode():
         image_filename = f"{slug}.jpg"
         local_image_path = os.path.join(ASSETS_DIR, image_filename)
         
-        # 2. Download & Save Image Locally (matching portfolio dark/gold theme)
+        # 2. Download & Save Image Locally (tech-specific + dark/gold theme)
         try:
-            clean_prompt = re.sub(r'[^\w\s]', '', draft['img_prompt'])[:120]
-            # Style: Dark background with gold accents, minimalist tech aesthetic
-            style = "dark%20background%20black%20gold%20accent%20minimalist%20abstract%20geometric%20tech%20illustration%20professional%20elegant"
-            img_url = f"https://image.pollinations.ai/prompt/{style}%20{clean_prompt.replace(' ', '%20')}?width=1200&height=630"
+            primary_tech = draft.get('primary_tech', 'React')  # Fallback for older drafts
+            img_url = build_image_url(primary_tech, draft['title'], draft['img_prompt'])
             img_data = requests.get(img_url).content
             with open(local_image_path, 'wb') as f: f.write(img_data)
         except Exception as e:
