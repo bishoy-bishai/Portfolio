@@ -92,37 +92,54 @@ def run_draft_mode(is_retry=False):
         model = genai.GenerativeModel('gemini-2.5-flash')
         
         prompt = f"""
-        You are {AUTHOR_NAME}, a {AUTHOR_TITLE} with 10+ years of experience.
-        
         Topic: "{topic['title']}"
         Audience: Professional developers and engineering teams.
         
+        WRITING STYLE (CRITICAL):
+        Write in a clear, professional, and genuinely HUMAN tone.
+        The style should feel natural — like an experienced developer explaining 
+        the topic with confidence and warmth to a colleague over coffee.
+        
+        - Use smooth transitions and conversational flow
+        - Include relatable examples and small storytelling touches
+        - Show real understanding, not robotic repetition
+        - Make it exciting, practical, and rich with real-world insights
+        - Avoid stiff, mechanical, or AI-sounding wording
+        - Write as a thoughtful expert who knows how to teach and simplify
+        - Keep the reader engaged from start to finish
+        - Use "I've found...", "In my experience...", "Here's the thing..."
+        - Share lessons learned from real projects
+        
         Generate 4 parts. Use STRICT separators.
         
-        1. VIDEO SCRIPT: 
-           - Confident, authoritative narrator voice
-           - Share real-world insights and lessons learned
-           - 200 words, storytelling with technical depth
+        1. VIDEO SCRIPT (200 words):
+           - Warm, confident narrator voice — like explaining to a friend
+           - Start with a hook that makes them curious
+           - Share a quick story or "aha moment" from real experience
+           - End with actionable takeaway
         
-        2. VISUAL PROMPT: 
+        2. VISUAL PROMPT:
            - Dark background (#1A1A1A) with gold accents (#C9A227)
            - Minimalist, abstract tech illustration
            - Clean geometric shapes, no text
-           - Professional, elegant aesthetic matching portfolio theme
+           - Professional, elegant aesthetic
         
-        3. BLOG POST (Markdown):
-           - Professional technical article
-           - Structure: Problem → Analysis → Solution → Best Practices
-           - Include practical code examples (React/TypeScript preferred)
-           - Share senior-level insights and architectural considerations
-           - Add performance tips and common pitfalls to avoid
-           - NO quizzes - this is a professional engineering blog
-           - 800-1200 words
+        3. BLOG POST (Markdown, 800-1200 words):
+           - Hook: Start with a relatable problem or story
+           - Context: Why this matters in real projects
+           - Deep Dive: Explain with practical code (React/TypeScript)
+           - Insights: Share what most tutorials miss
+           - Pitfalls: Common mistakes and how to avoid them
+           - Wrap-up: Key takeaways, not a boring summary
+           - NO quizzes, NO "In conclusion...", NO robotic endings
+           - IMPORTANT: Write raw markdown, do NOT wrap in ```markdown``` code fences
+           - Only use code fences for actual code examples (```typescript, ```bash, etc.)
         
-        4. TWEETS: 
-           - Expert thread (ByteByteGo / Dan Abramov style)
-           - Confident, insightful tone
-           - 5-7 tweets max
+        4. TWEETS (5-7 tweets):
+           - Expert thread style (like Dan Abramov or Kent C. Dodds)
+           - Punchy, insightful, opinionated
+           - Each tweet should stand alone but flow together
+           - End with a thought-provoking question or bold statement
         
         OUTPUT FORMAT:
         ===SCRIPT===
