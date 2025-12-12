@@ -9,7 +9,7 @@ import tailwindcss from '@tailwindcss/vite';
 // https://astro.build/config
 export default defineConfig({
   site: 'https://bishoy-bishai.github.io',
-  base: '/portfolio',
+  base: '/portfolio/',
   integrations: [mdx(), sitemap()],
 
   vite: {
