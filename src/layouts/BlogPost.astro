@@ -1,0 +1,388 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import FormattedDate from '../components/FormattedDate.astro';
+import { AUTHOR_NAME } from '../consts';
+
+type Props = CollectionEntry<'blog'>['data'];
+
+const baseUrl = import.meta.env.BASE_URL;
+const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content={description} />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL}favicon.svg`} />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title} | {AUTHOR_NAME}</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+	</head>
+
+	<body>
+		<!-- Navigation -->
+		<nav class="nav">
+			<a href={baseUrl} class="nav-logo">{AUTHOR_NAME}</a>
+			<div class="nav-links">
+				<a href={baseUrl} class="nav-link">Home</a>
+				<a href={`${baseUrl}blog`} class="nav-link">Blog</a>
+			</div>
+		</nav>
+
+		<main>
+			<article class="article">
+				<!-- Hero Image -->
+				{heroImage && (
+					<div class="hero-image">
+						<Image width={1400} height={600} src={heroImage} alt={title} />
+					</div>
+				)}
+
+				<!-- Article Header -->
+				<header class="article-header">
+					<div class="container">
+						<div class="article-meta">
+							<FormattedDate date={pubDate} />
+							{updatedDate && (
+								<span class="updated">
+									· Updated <FormattedDate date={updatedDate} />
+								</span>
+							)}
+						</div>
+						<h1 class="article-title">{title}</h1>
+						{description && <p class="article-description">{description}</p>}
+						<div class="article-author">
+							<span>By {AUTHOR_NAME}</span>
+						</div>
+					</div>
+				</header>
+
+				<!-- Article Content -->
+				<div class="article-content">
+					<div class="container prose">
+						<slot />
+					</div>
+				</div>
+			</article>
+		</main>
+
+		<!-- Footer -->
+		<footer class="footer">
+			<div class="container">
+				<a href={`${baseUrl}blog`} class="back-link">← Back to all posts</a>
+				<p class="copyright">© {new Date().getFullYear()} {AUTHOR_NAME}. All rights reserved.</p>
+			</div>
+		</footer>
+	</body>
+</html>
+
+<style>
+	:root {
+		--bg-primary: #FFFFFF;
+		--bg-dark: #1A1A1A;
+		--bg-accent: #F5F5F5;
+		--text-dark: #1A1A1A;
+		--text-light: #FFFFFF;
+		--text-muted: #666666;
+		--accent: #C9A227;
+		--border: #E0E0E0;
+		--font-display: 'Cormorant Garamond', Georgia, serif;
+		--font-body: 'Montserrat', 'Helvetica Neue', sans-serif;
+	}
+
+	* {
+		box-sizing: border-box;
+		margin: 0;
+		padding: 0;
+	}
+
+	body {
+		font-family: var(--font-body);
+		font-weight: 400;
+		line-height: 1.6;
+		color: var(--text-dark);
+		background: var(--bg-primary);
+		-webkit-font-smoothing: antialiased;
+	}
+
+	a {
+		color: var(--accent);
+		text-decoration: none;
+		transition: color 0.3s ease;
+	}
+
+	a:hover {
+		color: #d4af37;
+	}
+
+	.container {
+		max-width: 800px;
+		margin: 0 auto;
+		padding: 0 2rem;
+	}
+
+	/* ===== NAVIGATION ===== */
+	.nav {
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		z-index: 100;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 1rem 3rem;
+		background: var(--bg-dark);
+		box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+	}
+
+	.nav-logo {
+		font-family: var(--font-display);
+		font-size: 1.5rem;
+		font-weight: 600;
+		color: var(--text-light);
+	}
+
+	.nav-logo:hover {
+		color: var(--accent);
+	}
+
+	.nav-links {
+		display: flex;
+		gap: 2.5rem;
+	}
+
+	.nav-link {
+		font-size: 0.85rem;
+		font-weight: 500;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+		color: rgba(255,255,255,0.7);
+	}
+
+	.nav-link:hover {
+		color: var(--accent);
+	}
+
+	/* ===== HERO IMAGE ===== */
+	.hero-image {
+		width: 100%;
+		height: 50vh;
+		min-height: 400px;
+		margin-top: 60px;
+		overflow: hidden;
+	}
+
+	.hero-image img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+	/* ===== ARTICLE HEADER ===== */
+	.article-header {
+		background: var(--bg-dark);
+		color: var(--text-light);
+		padding: 4rem 0;
+		text-align: center;
+	}
+
+	.article:not(:has(.hero-image)) .article-header {
+		padding-top: 8rem;
+	}
+
+	.article-meta {
+		font-size: 0.85rem;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+		color: var(--accent);
+		margin-bottom: 1.5rem;
+		font-weight: 500;
+	}
+
+	.updated {
+		color: rgba(255,255,255,0.5);
+	}
+
+	.article-title {
+		font-family: var(--font-display);
+		font-size: clamp(2rem, 5vw, 3.5rem);
+		font-weight: 500;
+		line-height: 1.2;
+		margin-bottom: 1.5rem;
+		max-width: 900px;
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	.article-description {
+		font-size: 1.15rem;
+		color: rgba(255,255,255,0.7);
+		font-weight: 300;
+		max-width: 600px;
+		margin: 0 auto 2rem;
+		line-height: 1.7;
+	}
+
+	.article-author {
+		font-size: 0.9rem;
+		color: rgba(255,255,255,0.5);
+	}
+
+	/* ===== ARTICLE CONTENT ===== */
+	.article-content {
+		padding: 4rem 0;
+		background: var(--bg-primary);
+	}
+
+	.prose {
+		font-size: 1.1rem;
+		line-height: 1.9;
+		color: var(--text-dark);
+	}
+
+	.prose :global(h2) {
+		font-family: var(--font-display);
+		font-size: 2rem;
+		font-weight: 500;
+		margin: 3rem 0 1.5rem;
+		color: var(--text-dark);
+	}
+
+	.prose :global(h3) {
+		font-family: var(--font-display);
+		font-size: 1.5rem;
+		font-weight: 500;
+		margin: 2.5rem 0 1rem;
+		color: var(--text-dark);
+	}
+
+	.prose :global(p) {
+		margin-bottom: 1.5rem;
+	}
+
+	.prose :global(ul),
+	.prose :global(ol) {
+		margin: 1.5rem 0;
+		padding-left: 1.5rem;
+	}
+
+	.prose :global(li) {
+		margin-bottom: 0.75rem;
+	}
+
+	.prose :global(blockquote) {
+		border-left: 3px solid var(--accent);
+		padding-left: 1.5rem;
+		margin: 2rem 0;
+		font-style: italic;
+		color: var(--text-muted);
+		font-size: 1.2rem;
+	}
+
+	.prose :global(code) {
+		background: var(--bg-accent);
+		padding: 0.2rem 0.4rem;
+		border-radius: 3px;
+		font-size: 0.9em;
+	}
+
+	.prose :global(pre) {
+		background: var(--bg-dark);
+		color: var(--text-light);
+		padding: 1.5rem;
+		border-radius: 4px;
+		overflow-x: auto;
+		margin: 2rem 0;
+	}
+
+	.prose :global(pre code) {
+		background: none;
+		padding: 0;
+	}
+
+	.prose :global(img) {
+		max-width: 100%;
+		height: auto;
+		border-radius: 4px;
+		margin: 2rem 0;
+	}
+
+	.prose :global(hr) {
+		border: none;
+		border-top: 1px solid var(--border);
+		margin: 3rem 0;
+	}
+
+	.prose :global(a) {
+		color: var(--accent);
+		border-bottom: 1px solid transparent;
+	}
+
+	.prose :global(a:hover) {
+		border-bottom-color: var(--accent);
+	}
+
+	/* ===== FOOTER ===== */
+	.footer {
+		background: var(--bg-dark);
+		color: var(--text-light);
+		padding: 3rem 2rem;
+		text-align: center;
+	}
+
+	.back-link {
+		display: inline-block;
+		font-size: 0.9rem;
+		font-weight: 500;
+		color: var(--accent);
+		margin-bottom: 1.5rem;
+		letter-spacing: 0.05em;
+	}
+
+	.back-link:hover {
+		color: #d4af37;
+	}
+
+	.copyright {
+		font-size: 0.85rem;
+		color: rgba(255,255,255,0.4);
+	}
+
+	/* ===== RESPONSIVE ===== */
+	@media (max-width: 768px) {
+		.nav {
+			padding: 1rem 1.5rem;
+		}
+
+		.nav-links {
+			gap: 1.5rem;
+		}
+
+		.hero-image {
+			height: 35vh;
+			min-height: 250px;
+		}
+
+		.article-header {
+			padding: 3rem 0;
+		}
+
+		.article-content {
+			padding: 3rem 0;
+		}
+
+		.container {
+			padding: 0 1.5rem;
+		}
+
+		.prose {
+			font-size: 1rem;
+		}
+	}
+</style>

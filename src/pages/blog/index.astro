@@ -1,0 +1,361 @@
+---
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import FormattedDate from '../../components/FormattedDate.astro';
+import { SITE_DESCRIPTION, SITE_TITLE, AUTHOR_NAME } from '../../consts';
+
+const baseUrl = import.meta.env.BASE_URL;
+
+const posts = (await getCollection('blog')).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content={SITE_DESCRIPTION} />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL}favicon.svg`} />
+		<meta name="generator" content={Astro.generator} />
+		<title>{SITE_TITLE}</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+	</head>
+	<body>
+		<!-- Navigation -->
+		<nav class="nav nav-scrolled">
+			<a href={baseUrl} class="nav-logo">{AUTHOR_NAME}</a>
+			<div class="nav-links">
+				<a href={baseUrl} class="nav-link">Home</a>
+				<a href={`${baseUrl}blog`} class="nav-link nav-link-active">Blog</a>
+			</div>
+		</nav>
+
+		<!-- Hero Section -->
+		<section class="hero">
+			<div class="hero-content">
+				<span class="hero-label">The Blog</span>
+				<h1 class="hero-title">Thoughts & Insights</h1>
+				<p class="hero-subtitle">Ideas on frontend development, architecture, and building great products.</p>
+			</div>
+		</section>
+
+		<!-- Posts Section -->
+		<main class="main">
+			<div class="container">
+				<div class="posts-grid">
+					{posts.map((post, index) => (
+						<article class={`post-card ${index === 0 ? 'post-featured' : ''}`}>
+							<a href={`${baseUrl}blog/${post.id}/`} class="post-link">
+								{post.data.heroImage && (
+									<div class="post-image">
+										<Image 
+											width={index === 0 ? 1200 : 600} 
+											height={index === 0 ? 600 : 400} 
+											src={post.data.heroImage} 
+											alt={post.data.title}
+										/>
+									</div>
+								)}
+								<div class="post-content">
+									<span class="post-date">
+										<FormattedDate date={post.data.pubDate} />
+									</span>
+									<h2 class="post-title">{post.data.title}</h2>
+									{post.data.description && (
+										<p class="post-excerpt">{post.data.description}</p>
+									)}
+									<span class="post-read-more">Read Article →</span>
+								</div>
+							</a>
+						</article>
+					))}
+				</div>
+			</div>
+		</main>
+
+		<!-- Footer -->
+		<footer class="footer">
+			<div class="container">
+				<p>© {new Date().getFullYear()} {AUTHOR_NAME}. All rights reserved.</p>
+			</div>
+		</footer>
+	</body>
+</html>
+
+<style>
+	:root {
+		--bg-primary: #FFFFFF;
+		--bg-dark: #1A1A1A;
+		--bg-accent: #F5F5F5;
+		--text-dark: #1A1A1A;
+		--text-light: #FFFFFF;
+		--text-muted: #666666;
+		--accent: #C9A227;
+		--border: #E0E0E0;
+		--font-display: 'Cormorant Garamond', Georgia, serif;
+		--font-body: 'Montserrat', 'Helvetica Neue', sans-serif;
+	}
+
+	* {
+		box-sizing: border-box;
+		margin: 0;
+		padding: 0;
+	}
+
+	body {
+		font-family: var(--font-body);
+		font-weight: 400;
+		line-height: 1.6;
+		color: var(--text-dark);
+		background: var(--bg-primary);
+		-webkit-font-smoothing: antialiased;
+	}
+
+	a {
+		color: inherit;
+		text-decoration: none;
+	}
+
+	/* ===== NAVIGATION ===== */
+	.nav {
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		z-index: 100;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 1rem 3rem;
+		background: var(--bg-dark);
+		box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+	}
+
+	.nav-logo {
+		font-family: var(--font-display);
+		font-size: 1.5rem;
+		font-weight: 600;
+		color: var(--text-light);
+	}
+
+	.nav-logo:hover {
+		color: var(--accent);
+	}
+
+	.nav-links {
+		display: flex;
+		gap: 2.5rem;
+		align-items: center;
+	}
+
+	.nav-link {
+		font-size: 0.85rem;
+		font-weight: 500;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+		color: rgba(255,255,255,0.7);
+		transition: color 0.3s ease;
+	}
+
+	.nav-link:hover,
+	.nav-link-active {
+		color: var(--accent);
+	}
+
+	/* ===== HERO ===== */
+	.hero {
+		background: var(--bg-dark);
+		color: var(--text-light);
+		padding: 10rem 2rem 6rem;
+		text-align: center;
+	}
+
+	.hero-content {
+		max-width: 700px;
+		margin: 0 auto;
+	}
+
+	.hero-label {
+		display: inline-block;
+		font-size: 0.85rem;
+		letter-spacing: 0.3em;
+		text-transform: uppercase;
+		color: var(--accent);
+		margin-bottom: 1.5rem;
+		font-weight: 500;
+	}
+
+	.hero-title {
+		font-family: var(--font-display);
+		font-size: clamp(2.5rem, 6vw, 4rem);
+		font-weight: 500;
+		margin-bottom: 1.5rem;
+	}
+
+	.hero-subtitle {
+		font-size: 1.1rem;
+		color: rgba(255,255,255,0.7);
+		font-weight: 300;
+	}
+
+	/* ===== MAIN CONTENT ===== */
+	.main {
+		padding: 5rem 2rem;
+		background: var(--bg-accent);
+		min-height: 50vh;
+	}
+
+	.container {
+		max-width: 1200px;
+		margin: 0 auto;
+	}
+
+	/* ===== POSTS GRID ===== */
+	.posts-grid {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 2.5rem;
+	}
+
+	.post-card {
+		background: var(--bg-primary);
+		border-radius: 4px;
+		overflow: hidden;
+		box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+		transition: transform 0.3s ease, box-shadow 0.3s ease;
+	}
+
+	.post-card:hover {
+		transform: translateY(-5px);
+		box-shadow: 0 12px 40px rgba(0,0,0,0.1);
+	}
+
+	.post-featured {
+		grid-column: span 2;
+	}
+
+	.post-link {
+		display: block;
+	}
+
+	.post-image {
+		overflow: hidden;
+		aspect-ratio: 16/9;
+	}
+
+	.post-featured .post-image {
+		aspect-ratio: 21/9;
+	}
+
+	.post-image img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		transition: transform 0.5s ease;
+	}
+
+	.post-card:hover .post-image img {
+		transform: scale(1.05);
+	}
+
+	.post-content {
+		padding: 2rem;
+	}
+
+	.post-featured .post-content {
+		padding: 2.5rem;
+	}
+
+	.post-date {
+		display: block;
+		font-size: 0.8rem;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+		color: var(--accent);
+		margin-bottom: 0.75rem;
+		font-weight: 600;
+	}
+
+	.post-title {
+		font-family: var(--font-display);
+		font-size: 1.5rem;
+		font-weight: 500;
+		margin-bottom: 0.75rem;
+		color: var(--text-dark);
+		line-height: 1.3;
+		transition: color 0.3s ease;
+	}
+
+	.post-featured .post-title {
+		font-size: 2rem;
+	}
+
+	.post-card:hover .post-title {
+		color: var(--accent);
+	}
+
+	.post-excerpt {
+		font-size: 0.95rem;
+		color: var(--text-muted);
+		line-height: 1.7;
+		margin-bottom: 1.5rem;
+	}
+
+	.post-read-more {
+		font-size: 0.85rem;
+		font-weight: 600;
+		color: var(--text-dark);
+		letter-spacing: 0.05em;
+		transition: color 0.3s ease;
+	}
+
+	.post-card:hover .post-read-more {
+		color: var(--accent);
+	}
+
+	/* ===== FOOTER ===== */
+	.footer {
+		background: var(--bg-dark);
+		color: rgba(255,255,255,0.4);
+		text-align: center;
+		padding: 2rem;
+		font-size: 0.85rem;
+	}
+
+	/* ===== RESPONSIVE ===== */
+	@media (max-width: 900px) {
+		.posts-grid {
+			grid-template-columns: 1fr;
+		}
+
+		.post-featured {
+			grid-column: span 1;
+		}
+
+		.post-featured .post-image {
+			aspect-ratio: 16/9;
+		}
+	}
+
+	@media (max-width: 768px) {
+		.nav {
+			padding: 1rem 1.5rem;
+		}
+
+		.nav-links {
+			gap: 1.5rem;
+		}
+
+		.hero {
+			padding: 8rem 1.5rem 4rem;
+		}
+
+		.main {
+			padding: 3rem 1.5rem;
+		}
+	}
+</style>

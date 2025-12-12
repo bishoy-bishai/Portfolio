@@ -1,0 +1,112 @@
+---
+interface Props {
+	title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content="Bishoy Bishai - Senior Frontend Engineer with 10+ years of experience" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL}favicon.svg`} />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+	</head>
+	<body>
+		<slot />
+	</body>
+</html>
+
+<style is:global>
+    :root {
+        /* Wix-inspired Color Palette */
+        --bg-primary: #FFFFFF;
+        --bg-dark: #1A1A1A;
+        --bg-accent: #F5F5F5;
+        --text-dark: #1A1A1A;
+        --text-light: #FFFFFF;
+        --text-muted: #666666;
+        --accent: #C9A227; /* Gold accent */
+        --border: #E0E0E0;
+        
+        --font-display: 'Cormorant Garamond', Georgia, serif;
+        --font-body: 'Montserrat', 'Helvetica Neue', sans-serif;
+    }
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        font-family: var(--font-body);
+        font-weight: 400;
+        line-height: 1.6;
+        color: var(--text-dark);
+        background: var(--bg-primary);
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        line-height: 1.2;
+    }
+
+    a {
+        color: inherit;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    /* Smooth reveal animations */
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    .animate-in {
+        animation: fadeInUp 0.8s ease forwards;
+    }
+
+    .animate-delay-1 { animation-delay: 0.1s; }
+    .animate-delay-2 { animation-delay: 0.2s; }
+    .animate-delay-3 { animation-delay: 0.3s; }
+    .animate-delay-4 { animation-delay: 0.4s; }
+    .animate-delay-5 { animation-delay: 0.5s; }
+
+    /* Selection styling */
+    ::selection {
+        background: var(--accent);
+        color: var(--text-dark);
+    }
+</style>
