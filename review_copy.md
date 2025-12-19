@@ -3,208 +3,208 @@
 **Primary Tech:** Plasmo
 
 ## 🎥 Video Script
-Hey everyone! Ever felt the absolute grind of building a Chrome Extension? I’m talking about wrestling with Webpack configs, deciphering Manifest V3, and praying your content scripts play nice with the host page. It’s enough to make you just… not build that cool idea you had.
+Alright, gather 'round folks. Let's be real for a sec. If you’ve ever built a Chrome extension the "traditional" way, you know the drill: juggling Webpack configs, wrestling with `manifest.json` versions, and that constant head-scratching over how your content script *actually* talks to your background script. It can feel like you’re doing more plumbing than actual feature development.
 
-I remember this one time, I was trying to build a relatively simple productivity extension. Every feature felt like an uphill battle against the build system. Hot Module Reloading? Forget about it. Debugging background service workers? A nightmare. I was spending more time on tooling than on the actual user experience.
+I’ve been there. I remember one project where I spent an entire day just trying to get HMR working consistently across a popup and a content script. It was… painful. Then I stumbled upon Plasmo. And honestly, it felt like an "aha!" moment.
 
-Then, a colleague pointed me to Plasmo. And honestly, it was an "aha!" moment that completely changed my approach. Suddenly, I was writing modern React, with full TypeScript support, enjoying lightning-fast HMR thanks to Vite, and Plasmo just… handled everything else. Manifest generation, packaging, environment variables – all boilerplate gone. It felt like someone lifted a massive weight off my shoulders.
-
-Here’s the thing: Plasmo doesn't just simplify extension development; it *modernizes* it. It lets you bring all the best practices from web development directly into your extension projects. So, if you've got an extension idea brewing, or your team is struggling with an existing one, Plasmo is absolutely worth a deep dive. It's a game-changer for developer experience.
+Here’s the thing: Plasmo completely abstracts away that boilerplate. It’s like having a highly opinionated, incredibly smart build system just focused on extensions. You write your React, Vue, or Svelte components, your TypeScript logic, and Plasmo handles the Manifest V3 migrations, the bundling, the HMR across all contexts—the works. It frees you up to just focus on what your extension *does*, not how it gets built. It’s a total game-changer for developer experience. Trust me, if you’re building extensions, you owe it to yourself to check it out.
 
 ## 🖼️ Image Prompt
-A dark, elegant, and minimalist digital art piece on a #1A1A1A background. In the center, a luminous, abstract gold (#C9A227) symbol subtly representing the "P" from Plasmo, stylized to evoke speed and integration, perhaps resembling a streamlined, glowing puzzle piece perfectly clicking into an outline of a web browser window. Emanating from this central Plasmo symbol, intricate gold (#C9A227) lines form a component tree structure, hinting at React's hierarchical nature with subtle orbital rings, seamlessly blending into the core. Dynamic, flowing gold (#C9A227) energy lines and abstract arrows illustrate data movement, connecting the central extension symbol to a faint, gold-outlined content script area overlaying a generic webpage representation, and to an ethereal, wispy gold cloud representing background service worker logic. Small, stylized streaks of gold light suggest rapid development and hot module reloading, emphasizing Plasmo's Vite integration. The overall aesthetic is professional, slightly futuristic, and conveys powerful, fast, and integrated development for browser extensions. No text, no logos.
+A minimalist, abstract representation of the Plasmo framework for Chrome extensions. Dark background (#1A1A1A) with striking gold accents (#C9A227). The core visual should feature interconnected, glowing abstract shapes representing different parts of a browser extension: a central, slightly larger hexagonal node (symbolizing the background service worker) connected by elegant, golden data flow lines to smaller, distinct shapes (one representing a popup, another a content script, and a third a devtools page). These shapes should subtly hint at browser windows or puzzle pieces fitting together. Around these elements, fine, geometric golden lines illustrate rapid development, hot module reloading (HMR), and automated bundling—perhaps with a subtle, stylized "fast forward" or "build" icon integrated abstractly into the gold lines. The overall aesthetic is professional, clean, and highlights efficiency and connectivity, without any text or logos, but instantly recognizable as an extension development concept.
 
 ## 🐦 Expert Thread
-1/7 Chrome extension development often feels like stepping into a time machine. Manifest V3 complexity, Webpack nightmares, sluggish dev cycles. But what if you could use modern React, TypeScript, and Vite's HMR? #ChromeExtensions #WebDev
+1/7 Building Chrome extensions used to feel like a constant battle against Webpack configs & Manifest V3 quirks. It drained the fun right out of innovation. Then, #Plasmo entered the chat. It's truly a paradigm shift for DX.
 
-2/7 I've found @plasmohq isn't just a bundler for extensions; it's a paradigm shift. Zero-config, convention-driven, and brings the joy of modern DX to a platform often plagued by boilerplate. My productivity literally skyrocketed. #Plasmo #DeveloperExperience
+2/7 Plasmo makes Manifest V3 migrations almost invisible. No more wrestling with service workers or content security policies. You just write your code, and Plasmo handles the boilerplate. This isn't just convenience; it's enablement. #ChromeExtensions #DevTools
 
-3/7 Here's the thing: Plasmo handles ALL the nitty-gritty: background service workers, content scripts, popups, options pages. You just write your React/TS components. It's like having an expert extension dev on your team, for free. #ReactJS #TypeScript
+3/7 The HMR in Plasmo? Chef's kiss. Popups, content scripts, background service workers – everything hot-reloads seamlessly. It slashes development cycles and keeps you in the flow. This is what modern web dev should feel like, even for extensions. #WebDev #DeveloperExperience
 
-4/7 A common pitfall I've seen: fighting Manifest V3 permissions. Plasmo simplifies this by inferring much of it, and giving you clear ways to declare the rest. Focus on your feature, not appeasing the browser gods. #MV3 #WebExtensions
+4/7 Cross-context communication in extensions can be gnarly. Plasmo provides a clean foundation, making `chrome.runtime.sendMessage` patterns less of a headache. Structure your messages with TypeScript enums & interfaces, and you're golden. #TypeScript #Frontend
 
-5/7 Don't underestimate Plasmo's approach to inter-script communication. Trying to bypass the built-in messaging for hacky global state will lead to brittle code. Embrace the framework's patterns for robust, maintainable extensions. #FrontendDev #BestPractices
+5/7 A common pitfall: over-requesting permissions. Only ask for what you NEED. Plasmo's `package.json` config for `permissions` and `host_permissions` makes this explicit and easy to manage. Good security hygiene, built-in. #Security #BestPractices
 
-6/7 For engineering teams hesitant about building extensions due to perceived complexity, Plasmo is your answer. It dramatically lowers the barrier to entry, making extension development accessible and enjoyable for any modern frontend team. #EngineeringTeams #TechStrategy
+6/7 My favorite thing about Plasmo? It lets me think about FEATURES, not build systems. It democratizes complex extension development, making it accessible and enjoyable for teams used to React/Vue/Svelte ecosystems. #Productivity #Engineering
 
-7/7 The future of browser extensions is fast, modern, and developer-friendly with tools like Plasmo. Are you still stuck in the past, or ready to supercharge your extension development workflow? #BuildBetter #FutureOfWeb
+7/7 If your team has been hesitant about building Chrome extensions due to the perceived complexity, Plasmo is your answer. It's a mature, thoughtful framework that genuinely makes dev life better. What's holding *your* team back from launching that killer extension?
 
 ## 📝 Blog Post
-# Unlocking Superpowers: Building Chrome Extensions with Plasmo
+# Level Up Your Chrome Extensions: Why Plasmo Is a Game-Changer for Professional Developers
 
-Remember that initial spark of an idea for a Chrome Extension? The excitement about solving a real problem or building that perfect utility? Then, the crushing reality hits: Manifest V3, content scripts, background service workers, Webpack configs that make your eyes glaze over… suddenly, your brilliant idea feels buried under a mountain of boilerplate and arcane browser APIs.
+Building a robust Chrome extension can often feel like navigating a maze. I’ve been there: wrestling with `webpack.config.js` for separate bundles, meticulously hand-crafting `manifest.json` entries, and debugging cryptic communication channels between content scripts, popups, and background service workers. Throw in the complexity of migrating to Manifest V3, and what starts as an exciting idea can quickly devolve into a build system nightmare.
 
-I've been there. Multiple times. Building extensions used to feel like stepping back in time, forcing modern frontend developers to grapple with an ecosystem that wasn't quite keeping pace with the rest of the web. The sheer friction often killed projects before they even got off the ground.
+In my experience, this friction often kills innovative extension projects before they even get off the ground. Engineering teams, especially those used to the streamlined workflows of modern web frameworks, find the traditional extension development experience clunky and inefficient. This is precisely where Plasmo steps in, and honestly, it’s a breath of fresh air.
 
-But what if I told you there’s a framework that completely flips that script? A tool that brings the delightful developer experience of modern web development – think React, TypeScript, Vite, HMR – directly into your Chrome Extension projects? That, my friends, is Plasmo.
+## The Old Way vs. The Plasmo Way: A Paradigm Shift
 
-## Why Plasmo Matters in the Real World
+Before Plasmo, a typical extension project involved a significant amount of boilerplate. You'd configure Webpack for multiple entry points—one for your popup, one for each content script, one for your background script, maybe one for a devtools page. Then you'd write a complex `manifest.json` to tie it all together, ensuring every asset, permission, and entry point was correctly declared. Debugging required multiple browser inspectors and a deep understanding of Chrome's extension lifecycle. It was, to put it mildly, a drag.
 
-In a professional development setting, time is money, and developer experience is paramount. When your team is spending cycles on build configuration, debugging tricky Manifest V3 issues, or wrestling with slow dev reloads, that’s time *not* spent on features that actually deliver value to your users.
+Plasmo flips this script entirely. Think of it as the Next.js or Vite for Chrome extensions. It’s an opinionated, zero-config framework that handles all the mundane, repetitive tasks, letting you focus on the actual logic and UI of your extension. It comes with built-in support for TypeScript, React, Vue, Svelte, and even hot module replacement (HMR) across *all* extension contexts—yes, even your content scripts!
 
-Here's the thing: Plasmo isn't just another bundler. It's a holistic framework that embraces convention over configuration, abstracting away almost all the boilerplate and complexity inherent in extension development. It allows your team to focus on what they do best: building robust, user-friendly applications with familiar tools like React and TypeScript. This means faster iteration, fewer bugs related to build processes, and a much more enjoyable development journey.
+### Manifest V3? Plasmo Makes It a Breeze.
 
-I've found that when introducing Plasmo to engineering teams, the initial skepticism quickly turns into genuine excitement. The speed of development, especially with Vite's Hot Module Reloading (HMR), drastically shortens feedback loops. This isn't just a nicety; it's a critical advantage for agile teams.
+The shift to Manifest V3 has been a significant hurdle for many developers, primarily due to changes in background scripts (now service workers) and content security policies. Plasmo abstracts away most of these complexities. You simply place your files in specific directories, and Plasmo infers their purpose and generates the appropriate `manifest.json` entries for you.
 
-## Diving Deep: Plasmo's Magic and How to Wield It
-
-At its core, Plasmo is a zero-config, convention-based extension development framework. You don't write Webpack or Rollup configs; Plasmo handles it. You don't manually update `manifest.json`; Plasmo generates it based on your project structure and configuration.
-
-Let's look at some practical examples to see how Plasmo works its magic.
-
-### Getting Started: Your First Plasmo Extension
-
-Starting a new Plasmo project is as simple as:
-
-```bash
-pnpm create plasmo-app
-# or npm create plasmo-app
-# or yarn create plasmo-app
-```
-
-Choose "with-react-typescript" (my personal favorite for most projects), and you'll get a project structure that looks refreshingly familiar.
-
-### The Power of Convention: Script Types
-
-Plasmo cleverly uses file conventions to determine the type of script you're building:
-
--   `popup.tsx`: Your extension's popup UI (the little window that appears when you click the extension icon).
--   `options.tsx`: The options page for your extension.
--   `background.ts`: Your background service worker, for persistent logic and API calls.
--   `content-scripts/index.ts` (or `content.ts` in root): Scripts that inject directly into web pages.
--   `tabs/index.tsx`: Full-page UI for a new tab.
-
-This structure alone eliminates so much guesswork!
-
-### Example: A Simple React Popup
-
-Let's say you want a simple popup that displays a greeting.
+For instance, want a popup? Just create `popup.tsx`. Need a content script? `content.ts` or `contents/my-script.ts`. A background service worker? `background.ts`. It's that intuitive.
 
 ```typescript
-// popup.tsx
-import React, { useState } from "react"
+// src/popup.tsx
+import React from 'react';
+import { createRoot } from 'react-dom/client';
 
-import "./popup.css" // Plasmo handles CSS imports too!
+const Popup = () => {
+  const [message, setMessage] = React.useState('');
 
-function IndexPopup() {
-  const [name, setName] = useState("Developer")
+  React.useEffect(() => {
+    // Send a message to the background script
+    chrome.runtime.sendMessage({ type: 'GET_GREETING' }, (response) => {
+      setMessage(response.greeting);
+    });
+  }, []);
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        padding: 16,
-        minWidth: 300
-      }}>
-      <h1>Hello, {name}!</h1>
-      <p>This is your Plasmo extension popup.</p>
-      <input
-        type="text"
-        placeholder="Enter your name"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        style={{ marginTop: 10, padding: 8, borderRadius: 4, border: "1px solid #ccc" }}
-      />
-      <button
-        onClick={() => alert(`Nice to meet you, ${name}!`)}
-        style={{ marginTop: 10, padding: 10, backgroundColor: "#007bff", color: "white", border: "none", borderRadius: 4, cursor: "pointer" }}>
-        Say Hi!
+    <div style={{ padding: '20px', minWidth: '300px' }}>
+      <h1>Plasmo Extension!</h1>
+      <p>Message from background: {message}</p>
+      <button onClick={() => chrome.tabs.create({ url: 'https://plasmo.com' })}>
+        Learn More
       </button>
     </div>
-  )
-}
+  );
+};
 
-export default IndexPopup
-```
-Run `pnpm dev`, and boom! You have a live-reloading popup. Try changing the text; it updates instantly. This is where the magic of Vite and Plasmo truly shines.
-
-### Communicating Between Scripts
-
-A common challenge is inter-script communication. Plasmo provides excellent utilities for this, like the `MessagePort` API, simplifying the otherwise complex `chrome.runtime.sendMessage` and `onMessage` listeners.
-
-```typescript
-// content-scripts/index.ts
-import type { PlasmoCSConfig } from "plasmo"
-
-export const config: PlasmoCSConfig = {
-  matches: ["<all_urls>"] // Or more specific URLs
-}
-
-console.log("Plasmo content script loaded!")
-
-// Example: Send a message to the background script
-const sendMessageToBackground = async () => {
-  const response = await chrome.runtime.sendMessage({
-    type: "GREETING",
-    payload: "Hello from content script!"
-  })
-  console.log("Response from background:", response)
-}
-
-// Example: Listen for messages from popup/background
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  if (request.type === "INJECT_UI") {
-    console.log("Received request to inject UI:", request.payload)
-    // Here you'd typically inject a React component into the page DOM
-    sendResponse({ status: "UI Injected" })
-  }
-  return true // Indicates that you wish to send a response asynchronously
-})
-
-// Trigger sending a message after 3 seconds
-setTimeout(sendMessageToBackground, 3000)
+const root = createRoot(document.getElementById('root')!);
+root.render(<Popup />);
 ```
 
 ```typescript
-// background.ts
-import type { PlasmoCSConfig } from "plasmo"
+// src/background.ts
+// This runs as a service worker
+chrome.runtime.onInstalled.addListener(() => {
+  console.log('Plasmo extension installed!');
+});
 
-console.log("Plasmo background service worker active!")
-
-// Listen for messages from content scripts or popup
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  if (request.type === "GREETING") {
-    console.log("Received greeting from content script:", request.payload)
-    sendResponse({ message: `Background received: ${request.payload}` })
+  if (request.type === 'GET_GREETING') {
+    sendResponse({ greeting: 'Hello from your Plasmo background service worker!' });
   }
-  return true // Important for async responses
-})
+  return true; // Indicates an asynchronous response
+});
+```
 
-// Example: Send a message to the active content script from background
-const sendToContentScript = async () => {
-  const [tab] = await chrome.tabs.query({ active: true, currentWindow: true })
-  if (tab?.id) {
-    await chrome.tabs.sendMessage(tab.id, { type: "INJECT_UI", payload: "Time to show some UI!" })
-    console.log("Message sent to content script to inject UI.")
+```typescript
+// src/content.ts
+// This script runs on specific web pages
+console.log("Hello from Plasmo content script!");
+
+// Example: Inject some content into the page
+const newDiv = document.createElement('div');
+newDiv.style.cssText = `
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  background-color: #C9A227;
+  color: #1A1A1A;
+  padding: 10px;
+  border-radius: 5px;
+  z-index: 9999;
+`;
+newDiv.textContent = 'Plasmo content injected!';
+document.body.appendChild(newDiv);
+
+// Listen for messages from popup or background
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  if (request.type === 'HIGHLIGHT_TEXT') {
+    document.querySelectorAll('p').forEach(p => {
+      p.style.backgroundColor = request.color || 'yellow';
+    });
+    sendResponse({ status: 'highlighted' });
   }
+  return true;
+});
+```
+Notice how clean the code is? Plasmo manages the boilerplate for importing React, creating the root, and even handling the content script injection based on your `package.json` configurations (or sensible defaults).
+
+## Practical Insights from the Trenches
+
+One thing I've found consistently overlooked in tutorials is robust cross-context communication. When you have a popup, content script, and background script all needing to interact, it can get messy. Plasmo doesn't magically solve `chrome.runtime.sendMessage` complexity, but by providing a clean, consistent environment, it makes structuring your communication much easier.
+
+**Tip for communication:** Standardize your message types. Define an `interface` or `enum` for message actions.
+
+```typescript
+// src/types.ts
+export enum MessageType {
+  GET_GREETING = 'GET_GREETING',
+  HIGHLIGHT_TEXT = 'HIGHLIGHT_TEXT',
+  PERSIST_DATA = 'PERSIST_DATA'
 }
 
-// Trigger sending a message after 5 seconds
-setTimeout(sendToContentScript, 5000)
+export interface GetGreetingMessage {
+  type: MessageType.GET_GREETING;
+}
+
+export interface HighlightTextMessage {
+  type: MessageType.HIGHLIGHT_TEXT;
+  color?: string;
+}
+
+// ... and so on for other messages
 ```
-This messaging pattern is crucial. It keeps your scripts decoupled and manageable.
 
-## Insights from the Trenches
+Then, you can use these types for sending and receiving messages, making your code safer and easier to maintain.
 
-Through several Plasmo projects, I've gathered a few insights that often get overlooked in basic tutorials:
+```typescript
+// Sending from popup to content script
+import { MessageType, HighlightTextMessage } from '../types';
 
-1.  **Embrace the `plasmo.config.ts`:** While Plasmo is zero-config, `plasmo.config.ts` is your escape hatch for specific needs. Need to add a custom Vite plugin? Change build output? This is where you do it. Don't be afraid to customize when necessary, but always try Plasmo's conventions first.
-2.  **Manifest V3 Permissions are Still Key:** Plasmo helps generate your `manifest.json`, but you *still* need to understand and declare the permissions your extension requires. Forgetting a permission can lead to silent failures that are tough to debug. Use `plasmo.config.ts` for additional permissions, or Plasmo will infer basic ones.
-3.  **The `storage` API is Your Friend:** For state persistence, `chrome.storage.local` and `chrome.storage.sync` are invaluable. Plasmo doesn't enforce a specific state management library, but `chrome.storage` is often the simplest and most performant for extension-specific data.
-4.  **Debugging `background.ts` is Easier Than You Think:** Navigate to `chrome://extensions`, enable developer mode, find your Plasmo extension, and click the "service worker" link. It opens a dedicated DevTools instance for your background script, complete with console, network, and debugger tabs.
+chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+  if (tabs[0]?.id) {
+    chrome.tabs.sendMessage<HighlightTextMessage>(tabs[0].id, {
+      type: MessageType.HIGHLIGHT_TEXT,
+      color: 'cyan'
+    });
+  }
+});
+```
 
-## Common Pitfalls and How to Avoid Them
+Another crucial insight: **debugging**. With Plasmo, your development server runs on a specific port. Your popup and devtools page components are generally inspectable via the standard browser devtools. For your background service worker, open the "Manage Extensions" page (`chrome://extensions`), enable "Developer mode," find your extension, and click "Service Worker" next to its details. For content scripts, inspect the page it's injected into—you'll see your script's console logs and can set breakpoints there. This multi-pronged debugging approach is essential.
 
-Even with Plasmo, some common traps can snag you:
+## Common Pitfalls and How to Sidestep Them
 
-1.  **Mismanaging Global State Across Scripts:** Remember, content scripts, popups, and background scripts often run in isolated environments. Trying to share a global variable directly won't work. Use Plasmo's messaging system or `chrome.storage` for shared state. Don't try to force a full Redux store if a simpler approach suffices for inter-script communication.
-2.  **Over-injecting Content Scripts:** Just because you *can* inject a content script on `"<all_urls>"` doesn't mean you *should*. Be as specific as possible with `matches` in `plasmo.config.ts` or directly in the content script file config. This improves performance and security.
-3.  **Forgetting to Handle Asynchronous Responses:** In `chrome.runtime.onMessage.addListener`, if you intend to `sendResponse` asynchronously (e.g., after an `await` call), you *must* return `true` from your listener. Forgetting this will cause `sendResponse` to fail silently. This catches many developers off guard!
-4.  **Performance on Heavy Pages:** If your content script injects complex React components onto a busy webpage, be mindful of performance. Lazy load components, debounce events, and optimize your rendering. Plasmo makes it easy to inject React, but doesn't absolve you of performance considerations.
+1.  **Permissions Overload:** It’s tempting to ask for `"<all_urls>"` and every `chrome.*` permission under the sun. Don't. Only request the absolute minimum permissions your extension needs. Plasmo handles some default permissions, but for specific API access (like `storage`, `activeTab`, `scripting`), you'll still need to declare them in your `package.json` (which Plasmo uses to generate `manifest.json`):
 
-## Your Extension Journey, Supercharged
+    ```json
+    // package.json snippet
+    "plasmo": {
+      "permissions": [
+        "storage",
+        "activeTab",
+        "scripting"
+      ],
+      "host_permissions": [
+        "https://*.google.com/*"
+      ]
+    }
+    ```
 
-Plasmo isn't just a tool; it's an enabler. It lets you bring the full power of modern frontend development to a platform that historically felt like an afterthought. It removes the tedious setup, accelerates your development cycle, and allows you to focus on the truly creative and problem-solving aspects of building browser extensions.
+2.  **Content Script Isolation:** Remember, content scripts live in an isolated world within the page. They can't directly access page JavaScript variables or functions without explicit injection. If you need to interact with the host page's DOM or JS context, you'll need to use techniques like injecting `<script>` tags or manipulating the `window` object carefully.
 
-So, if you've got an extension idea that's been nagging you, or your team needs to streamline their extension development workflow, give Plasmo a serious look. It’s mature, actively maintained, and genuinely a joy to work with. Go build that amazing tool you've always dreamed of – Plasmo's got your back.
+3.  **`chrome.storage` vs. Local Storage:** `chrome.storage` is asynchronous, cross-device synced (with `sync`), and secure. Browser `localStorage` is synchronous and local. For extension data, `chrome.storage` is almost always the better choice, but you must handle its asynchronous nature. Don't fall into the trap of treating it like `localStorage`.
+
+    ```typescript
+    // Correct way to use chrome.storage
+    chrome.storage.local.set({ myKey: 'myValue' }).then(() => {
+      console.log('Value is set');
+    });
+
+    chrome.storage.local.get(['myKey']).then((result) => {
+      console.log('Value currently is ' + result.myKey);
+    });
+    ```
+
+4.  **Service Worker Lifecycle:** Background service workers are event-driven and can be terminated by the browser after periods of inactivity. This means you can't rely on global variables for long-term state. Persist crucial data using `chrome.storage` and re-initialize state when the service worker wakes up.
+
+## The Future Is Fluid
+
+Plasmo doesn’t just simplify the present; it future-proofs your extension development. With its strong focus on developer experience, modern web technologies, and automatic Manifest V3 compliance, it genuinely elevates the entire process. No more slogging through build configurations; just pure, focused development.
+
+If your team is considering building a Chrome extension, or if you're looking to revitalize an existing one, I wholeheartedly recommend giving Plasmo a spin. It’s changed how I approach extensions, letting me concentrate on delivering value and features rather than fighting the tooling. Happy building!
