@@ -1,35 +1,10 @@
-# REVIEW: Implementation Mistakes by Devs: How you should not use useEffect
+---
+title: "Implementation Mistakes by Devs: How you should not use useEffect"
+description: "useEffect: The Powerhouse Hook That's Often..."
+pubDate: "Jan 08 2026"
+heroImage: "../../assets/implementation-mistakes-by-devs--how-you-should-no.jpg"
+---
 
-**Primary Tech:** React
-
-## 🎥 Video Script
-Hey everyone! So, you know `useEffect`, right? It’s one of those React hooks that's incredibly powerful, almost like a superpower, but sometimes it feels like we’re wielding a lightsaber for the first time – powerful, but potentially self-damaging if not handled correctly.
-
-I've been in the trenches, just like you, building apps for years. I remember one particular sprint where we had this increasingly flaky component. Things just weren't updating consistently, or worse, they were updating *too much*. Every time I looked at the code, there was a `useEffect` hook with this sprawling dependency array, or sometimes, no array at all! It felt like the component was constantly arguing with itself.
-
-The 'aha!' moment hit when I realized we weren't just "doing stuff" in `useEffect`; we were trying to *synchronize* something outside of React's render cycle with our component's state or props. Once we started thinking of it as a synchronization mechanism, not just a place for side effects, everything clicked. It wasn't about "when should this run?" but "what dependencies does this effect *actually* rely on to stay in sync?"
-
-So, here’s the actionable takeaway: Before you reach for `useEffect`, pause. Ask yourself: "Am I trying to synchronize an external system or an asynchronous operation with my component's current state?" If not, there might be a simpler way. If yes, then be meticulous about those dependencies. It'll save you countless hours of debugging. Trust me on this one.
-
-## 🖼️ Image Prompt
-A professional, minimalist, and developer-focused visual. Dark background (#1A1A1A) with subtle gold accents (#C9A227). In the center, abstract representations of React's core: two intertwined, slightly glowing atomic structures with orbital rings, symbolizing component instances. Emanating from one of these atomic structures, a distinct, subtle "side effect" flow is depicted as a faint, golden ripple or a separate, looping energy current that subtly interacts with an external, abstract data source (represented by a minimalist, geometric data node). This golden flow highlights the synchronization aspect of `useEffect`, showing it acting *outside* the main component render cycle but connecting back to it. The overall aesthetic is clean, elegant, and conceptual, focusing on the relationship between a React component and its synchronized external effects.
-
-## 🐦 Expert Thread
-1/7 `useEffect` is NOT a lifecycle method for "doing stuff." It's React's mechanism for *synchronizing* your component with external systems. Miss this distinction, and you're in for dependency array hell, infinite loops, & stale closures. #ReactJS #useEffect
-
-2/7 Common `useEffect` mistake: Missing or incorrect dependency array. If a value from your component's scope (state, props, functions) is used inside `useEffect`, it MUST be in the deps array or wrapped in `useCallback`/`useMemo`. Otherwise, stale closures become your nemesis.
-
-3/7 Stop using `useEffect` for derived state! If `newValue = calculate(a, b)` can happen during render, do it directly. `useEffect` runs *after* render, forcing an extra pass. Use `useMemo` for expensive calculations if needed, but don't force `useEffect` into that role. #ReactTips
-
-4/7 Object/Array in deps? Be careful! JavaScript compares references. `useEffect(() => {}, [myObj])` will re-run if `myObj` is a new instance, even if its *contents* are identical. Extract primitive properties (`[myObj.id, myObj.name]`) or memoize the object itself.
-
-5/7 Cleanup is non-negotiable for effects that subscribe, listen, or time. Forget to `return () => cleanup()`? Hello, memory leaks, zombie subscriptions, and "Can't perform a React state update on an unmounted component" errors. Your future self will thank you for cleaning up.
-
-6/7 My rule of thumb: If you're reaching for `useEffect`, ask: "Am I connecting to something outside React's render loop (API, DOM, browser API, external library)?". If not, chances are there's a simpler, synchronous way.
-
-7/7 Mastering `useEffect` means a mental model shift. It's about data flow, synchronization, and managing external state. Are you using `useEffect` as a precision tool or a blunt instrument? How has your understanding of `useEffect` evolved over time? #DevCommunity #Frontend
-
-## 📝 Blog Post
 # `useEffect`: The Powerhouse Hook That's Often Misunderstood
 
 Alright team, let’s talk about `useEffect`. If you’ve been building React applications for any length of time, you’ve undoubtedly used it. It’s a core hook, a true workhorse, and arguably one of the most powerful tools in our React toolkit. But, and this is a big *but*, it's also probably the most commonly misused. I've found that many developers, myself included during earlier days, treat `useEffect` as a generic "do stuff" hook, a place to dump any logic that doesn't quite fit into a render. And honestly, that mindset can lead to some serious headaches.
