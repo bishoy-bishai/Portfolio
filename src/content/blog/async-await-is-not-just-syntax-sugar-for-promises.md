@@ -1,31 +1,10 @@
-# REVIEW: async/await is NOT just syntax sugar for Promises
+---
+title: "async/await is NOT just syntax sugar for Promises"
+description: "async/await: Far More Than Just Syntax Sugar for..."
+pubDate: "Jan 17 2026"
+heroImage: "../../assets/async-await-is-not-just-syntax-sugar-for-promises.jpg"
+---
 
-**Primary Tech:** TypeScript
-
-## 🎥 Video Script
-Alright, grab your coffee. Let's talk about something I’ve seen trip up a lot of really smart developers: the idea that `async/await` is *just* syntax sugar for Promises. I get it, it looks cleaner, more synchronous. But here’s the thing, calling it *just* sugar really misses the deeper power and fundamental changes it brings to how our JavaScript code executes.
-
-I remember this one gnarly bug, deep in a microservice where an unhandled promise rejection was mysteriously appearing in logs, but the stack trace was... thin, unhelpful. We had promises chaining everywhere. When we refactored to `async/await`, suddenly the stack traces were crystal clear, pointing directly to the line causing the issue. That was my "aha!" moment. `async/await` changed the *runtime behavior* and error handling significantly. It introduced a new primitive to the language’s execution model, creating a true pause and resume mechanism within the JavaScript engine itself.
-
-So, next time you’re writing async code, think beyond just syntactic brevity. Understand that `async/await` gives you a more robust control flow and debugging experience, fundamentally reshaping your application's asynchronous landscape.
-
-## 🖼️ Image Prompt
-A minimalist, professional developer-focused image. Dark background (#1A1A1A). The left side features abstract representations of chained Promises: a series of interconnected, flowing nodes or circular shapes in a golden hue, suggesting a continuous, less distinct path, with some subtle, scattered blue accents representing underlying JavaScript. On the right, `async/await` is depicted as clearly defined, sequential, structured blocks in a prominent gold, with distinct pause/await symbols (like a subtle vertical line or block-like segments) between them, indicating controlled execution points. These blocks incorporate faint TypeScript-like type annotations (e.g., `<T>`, `: Promise<void>`) in a slightly lighter gold or blue. A subtle, clear arrow in gold elegantly transitions from the convoluted Promise flow to the structured `async/await` path, symbolizing clarity and improved control. The overall aesthetic is clean, elegant, and conveys a sense of logical progression and enhanced structure. No text or logos.
-
-## 🐦 Expert Thread
-1/x Heard it again: "async/await is just syntax sugar for Promises." This narrative is holding us back. It's like saying a modern jet engine is "just a more powerful horse." The underlying mechanics are fundamentally different. #JavaScript #TypeScript
-
-2/x The most immediate, practical distinction? Error handling & stack traces. With `async/await`, `try/catch` blocks behave like synchronous ones. An `await`ed rejection feels like a synchronous `throw`. This isn't just cosmetic, it's a runtime primitive. #DevTips
-
-3/x Ever debugged a Promise chain and got a useless stack trace? `async/await` often preserves the *full* logical call stack across `await` points. This alone makes it *not* just sugar. It's a debugger's best friend. #Debugging #WebDev
-
-4/x The mental model shift is profound: from composing callback chains to writing sequential, pausing code. This isn't just about brevity; it's about shifting the burden of complexity from the developer to the language runtime. #Programming
-
-5/x If you're building robust applications, understanding *how* `async/await` changes the JS engine's control flow and microtask queue behavior is crucial. It gives you more power, more clarity, and less headache. #SoftwareEngineering
-
-6/x Stop viewing `async/await` as a simple shortcut. Recognize it as an evolution in JavaScript's concurrency model, providing superior control, predictability, and debuggability. What other "sugar" do you think hides deeper engineering marvels? #TechInsight
-
-## 📝 Blog Post
 # `async/await`: Far More Than Just Syntax Sugar for Promises
 
 There's a common phrase you hear floating around developer circles: "Oh, `async/await`? Yeah, that's just syntactic sugar for Promises." And honestly, for a long time, I repeated it too. It *feels* true. Your code becomes cleaner, more linear, and easier to read, much like taking a spoonful of sugar makes your coffee taste better. But after years of debugging complex asynchronous flows in production systems, I've come to realize that this perspective, while convenient, is profoundly misleading.
