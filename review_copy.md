@@ -1,264 +1,198 @@
-# REVIEW: ReactJS Hook Pattern ~Use Hook with Promises~
+# REVIEW: ReactJS Hook Pattern ~useEffectEvent Pattern~
 
 **Primary Tech:** React
 
 ## 🎥 Video Script
-Hey everyone! Have you ever found yourself in that familiar dance of managing `isLoading`, `isError`, and `data` states whenever you fetch data or deal with any promise in your React components? It’s a common scenario, right? You start with a `useEffect`, a couple of `useState` calls, and before you know it, you've got this scattered logic repeated across your app.
+Hey everyone! Ever found yourself staring blankly at a `useEffect` dependency array, trying to figure out why your function callback is constantly triggering re-runs, or worse, causing a stale closure bug? I've been there countless times. It’s a common scenario: you have an effect, and inside it, you call a function that needs access to the very latest props or state. You add the function to the dependency array, and BAM! Either it re-runs too much, or you wrap it in `useCallback` only to realize you’ve just moved the dependency problem.
 
-I've been there. On one project, our dashboard components became a maze of `if (loading)` checks and `try...catch` blocks. It was boilerplate hell, honestly. The "aha!" moment came when we realized: this is a *pattern*. This promise-handling logic is perfectly encapsulated by a custom hook.
-
-By abstracting this into something like `usePromise` or `useAsync`, we transformed our components from imperative state managers into declarative UI renderers. Imagine a single line, `const { data, loading, error } = useAsync(myPromiseFn);`, handling all that complexity, including critical cleanup to prevent race conditions and memory leaks. It streamlines everything. So, if you're battling async logic in your React apps, custom hooks for promises are your absolute superpower.
+In my journey building complex React apps, I stumbled upon a pattern that felt like unlocking a secret level: the `useEffectEvent` pattern, often just called `useEvent`. Here’s the thing: it’s a brilliant way to stabilize your event handlers and callbacks consumed by effects, without wrestling with dependency arrays or sacrificing freshness. Imagine an effect that only re-runs when its *triggering conditions* change, not when the *logic inside it* updates. This pattern lets you do exactly that. It's about separating *when* an effect acts from *what* it does. Mastering this will make your `useEffect` hooks far more predictable, performant, and genuinely a joy to work with.
 
 ## 🖼️ Image Prompt
-A dark, elegant, professional developer-focused image (#1A1A1A background). In the center, a stylized, abstract React atom (gold #C9A227 nucleus, subtle orbital rings) from which a minimalist, abstract "hook" shape (gold #C9A227) extends. This hook connects to a series of three interconnected, abstract, rectangular blocks or nodes, representing the lifecycle of a promise: one block is subtly shimmering or pulsating (pending state), another has a clean, clear structure (resolved/data state), and the third shows a fractured or subtly glowing red edge (error state). Data flow lines (gold #C9A227) move from the promise blocks back towards the React atom, indicating the flow of state updates. The overall composition is clean, modern, and symbolic, with no text or logos, emphasizing the integration of asynchronous operations within the React component lifecycle using hooks.
+A minimalist, professional, developer-focused image on a dark background (#1A1A1A). In the center, a stylized React atom structure (orbital rings and nucleus) with a glowing gold (#C9A227) component tree subtly emanating from it. Connected to one of the React component nodes is a shimmering gold `useEffect` hook icon, depicted as a small, elegant curved arrow. This `useEffect` hook points to a distinct, stable, gold-accented "event handler" node, which is visually separate from the main component's direct data flow. From this stable "event handler" node, faint, golden data flow arrows are shown reaching back towards the main React component, symbolizing access to the latest state/props, while the connection *from* `useEffect` *to* the event handler remains stable and solid. The stable "event handler" node has a subtle visual cue of immutability or a stable reference, perhaps a small, locked icon or a solid, unchanging aura. The overall impression is one of clarity, optimized data flow, and stability within a React application.
 
 ## 🐦 Expert Thread
-1/ Building a React app? If your components are riddled with `isLoading`, `isError`, and `data` states for every async operation, you're manually managing boilerplate. There's a better way. #ReactJS #ReactHooks #WebDev
+1/6 React's `useEffect` dependency array is a superpower, but it often trips us up with function dependencies. Ever added a function, only to watch your effect re-run wildly, or worse, get caught by a stale closure? We've all been there. #ReactJS #Hooks
 
-2/ The "aha!" moment: this isn't component-specific logic, it's a *pattern*. Custom hooks are perfect for encapsulating promise lifecycle management. Think `const { data, loading, error } = useMyPromise(fetchFn)`. Clean. Concise.
+2/6 `useCallback` is a good first step, but it just pushes the dependency problem. If your callback *needs* the latest state/props, you're back to listing them in `useCallback`'s deps, making *that* memoized function unstable. Not ideal for `useEffect`. #ReactDev
 
-3/ Critical lesson learned: Always clean up! Whether it's a `didCancel` flag or `AbortController`, preventing `setState` on unmounted components is NON-NEGOTIABLE. Saves you from race conditions and mysterious bugs. #JavaScript #Promises
+3/6 The `useEffectEvent` pattern (soon `useEvent`?) is a game-changer for stable event handlers *inside* effects. It lets your effect trigger based on its *true* dependencies, while the logic within *always* accesses the latest state. Mind blown. 🤯 #ReactPatterns
 
-4/ A simple `useAsync` hook turns complex `useEffect` chains into readable, reusable logic. Separate concerns: let the hook manage the promise, let the component focus purely on rendering. It's beautiful.
+4/6 The magic: `useEvent` uses `useRef` + `useLayoutEffect` to keep a stable wrapper function, but ensures the internal callback reference is *always* up-to-date. This wrapper goes in your `useEffect` deps, making the effect stable while the logic stays fresh. ✨ #FrontendDev
 
-5/ This pattern scales. From simple data fetches to complex mutations or chained async operations, custom hooks keep your components lean and focused. No more async spaghetti code!
+5/6 It's a mental model shift: your `useEffect` specifies *when* to execute, and the `useEvent` handler specifies *what* to do, always with current values. No more dependency juggling or unnecessary re-runs. Clean effects, happy developers. #JavaScript
 
-6/ Stop repeating yourself. Start abstracting. Investing time in a robust `useAsync` (or similar) hook early in a project pays dividends in maintainability and developer sanity.
-
-7/ What's your go-to pattern for managing promises in React hooks? Have you built a custom solution, or do you reach for a library? Let's discuss! #Frontend #SoftwareEngineering #DevCommunity
+6/6 This pattern decouples effect triggers from logic. Essential for complex interactions, analytics, or subscriptions. Are you tired of fighting `useEffect`? This could be your secret weapon. How do you tackle stable callbacks in your effects? 👇 #WebDev
 
 ## 📝 Blog Post
-# Elevate Your React: Mastering Async Logic with Custom Hooks and Promises
+# The `useEffectEvent` Pattern: Taming React's `useEffect` for Good
 
-Working with asynchronous operations is a cornerstone of modern web development. Whether it's fetching data from an API, submitting a form, or interacting with browser-specific APIs, promises are everywhere. In React, orchestrating these operations smoothly, while managing loading states, errors, and race conditions, can quickly become a tangled mess if not handled thoughtfully.
+If you've spent any significant time with React, chances are you've encountered the infamous `useEffect` dependency array dance. It usually starts innocently enough: you need to perform a side effect, so you reach for `useEffect`. Then, you realize the function you're calling inside your effect needs access to the latest state or props. You dutifully add it to the dependency array, and then... either your effect re-runs incessantly, or you introduce `useCallback` and realize you’ve just pushed the problem up the dependency chain.
 
-I've seen it countless times – and honestly, I’ve been guilty of it too. You start a new component, need to fetch some data, and suddenly you're sprinkling `isLoading`, `isError`, and `data` state variables all over the place. Then you copy-paste that same pattern to another component, and another. Before you know it, your codebase is a minefield of duplicated async logic, hard to maintain, harder to test, and prone to subtle bugs like updating state on unmounted components.
+It's a common source of frustration, leading to bugs like stale closures, performance issues from over-eager re-renders, and often, a lot of head-scratching. "There *must* be a better way," I've often thought. And there is. Enter the `useEffectEvent` pattern.
 
-**Here's the thing:** This isn't just about avoiding boilerplate. It's about fundamental architecture. React's component model is designed for reusability and separation of concerns. Why should our async logic be any different? This is precisely where custom hooks shine, offering an elegant solution to encapsulate and reuse promise-based logic.
+## The Core Problem: Functions in `useEffect` Dependencies
 
-## The Problem with Ad-Hoc Async Handling
-
-Let's quickly outline the common issues with handling promises directly within `useEffect` hooks without a structured pattern:
-
-1.  **Boilerplate:** `useState` for loading, error, and data. `useEffect` to trigger the fetch, `try...catch` block, `finally` to set loading state. Repeat everywhere.
-2.  **Race Conditions:** Multiple fetches might complete out of order, leading to stale data being displayed.
-3.  **Memory Leaks/Unmounted Components:** Attempting to update state on a component that has unmounted can lead to warnings and potential bugs.
-4.  **Lack of Reusability:** If you have 10 components fetching data, you're likely duplicating much of the same logic.
-5.  **Testability:** Testing individual components becomes harder when their async logic is deeply embedded.
-
-## The Custom Hook Solution: `useAsync`
-
-The ideal solution is to abstract this common pattern into a custom hook. Let's build a `useAsync` hook that gracefully handles a promise, providing `data`, `loading`, and `error` states. More importantly, we'll bake in a crucial cleanup mechanism.
+Let's illustrate the classic scenario. Imagine a component that logs user actions to an analytics service, but only when a specific ID changes.
 
 ```typescript
-import { useState, useEffect, useCallback } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 
-interface AsyncState<T> {
-  data: T | null;
-  loading: boolean;
-  error: Error | null;
-}
-
-// Option 1: A generic hook for any promise
-function useAsync<T>(
-  asyncFunction: () => Promise<T>,
-  dependencies: React.DependencyList = []
-): AsyncState<T> {
-  const [state, setState] = useState<AsyncState<T>>({
-    data: null,
-    loading: false, // Initially false, as the effect hasn't run yet
-    error: null,
-  });
-
-  const memoizedAsyncFunction = useCallback(asyncFunction, dependencies);
-
-  useEffect(() => {
-    let didCancel = false; // Flag to prevent state update if component unmounts
-    
-    const fetchData = async () => {
-      setState(prevState => ({ ...prevState, loading: true, error: null }));
-      try {
-        const result = await memoizedAsyncFunction();
-        if (!didCancel) {
-          setState({ data: result, loading: false, error: null });
-        }
-      } catch (err: any) {
-        if (!didCancel) {
-          setState({ data: null, loading: false, error: err });
-        }
-      }
-    };
-
-    fetchData();
-
-    return () => {
-      // Cleanup function: set flag to true on unmount or re-render
-      didCancel = true;
-    };
-  }, [memoizedAsyncFunction]); // Dependencies for the effect
-
-  return state;
-}
-```
-
-### Deconstructing `useAsync`
-
-1.  **State Management (`useState`):** We consolidate `data`, `loading`, and `error` into a single state object. This keeps our state updates atomic and makes the hook's return value clean.
-2.  **`useEffect` for Execution:**
-    *   It triggers the `asyncFunction` whenever `memoizedAsyncFunction` changes (which depends on `dependencies`).
-    *   It updates the `loading` state before the promise resolves or rejects.
-    *   It updates `data` or `error` based on the promise's outcome.
-3.  **`useCallback` for Stable Function Reference:** This is key! If `asyncFunction` is defined inline in the component, it would change on every render, causing `useEffect` to re-run unnecessarily. `useCallback` ensures our `asyncFunction` reference is stable unless its *own* dependencies change.
-4.  **The `didCancel` Flag (Crucial Insight!):** This is your shield against race conditions and updating state on unmounted components. When the `useEffect` cleanup function runs (either because the component unmounts or its dependencies change, triggering a re-run), `didCancel` is set to `true`. If the promise resolves *after* this flag is set, we simply ignore the `setState` call. This prevents subtle bugs and warnings that can be a real headache to debug.
-
-### Using `useAsync` in a Component
-
-```typescript
-import React from 'react';
-import { useAsync } from './useAsync'; // Assuming useAsync is in './useAsync.ts'
-
-interface User {
-  id: number;
-  name: string;
-  email: string;
-}
-
-const fetchUser = async (userId: number): Promise<User> => {
-  const response = await fetch(`https://jsonplaceholder.typicode.com/users/${userId}`);
-  if (!response.ok) {
-    throw new Error(`Failed to fetch user ${userId}`);
-  }
-  return response.json();
+type UserEvent = {
+  id: string;
+  action: string;
+  timestamp: number;
 };
 
-function UserProfile({ userId }: { userId: number }) {
-  // Pass an anonymous function that returns the promise, and userId as a dependency
-  const { data: user, loading, error } = useAsync(() => fetchUser(userId), [userId]);
-
-  if (loading) {
-    return <p>Loading user profile...</p>;
-  }
-
-  if (error) {
-    return <p style={{ color: 'red' }}>Error: {error.message}</p>;
-  }
-
-  if (!user) {
-    return <p>No user data.</p>;
-  }
-
-  return (
-    <div>
-      <h2>{user.name}</h2>
-      <p>Email: {user.email}</p>
-      <p>ID: {user.id}</p>
-    </div>
-  );
+function trackAnalytics(event: UserEvent) {
+  console.log('Tracking analytics:', event);
+  // In a real app, this would send data to a service
 }
 
-function App() {
-  const [currentUserId, setCurrentUserId] = React.useState(1);
+function UserActivityLogger({ userId }: { userId: string }) {
+  const [clickCount, setClickCount] = useState(0);
 
-  return (
-    <div>
-      <h1>User Profiles</h1>
-      <button onClick={() => setCurrentUserId(prev => prev + 1)}>Next User</button>
-      <UserProfile userId={currentUserId} />
-    </div>
-  );
-}
-
-export default App;
-```
-
-Notice how clean `UserProfile` becomes. It simply consumes the states provided by `useAsync` and renders accordingly. All the heavy lifting of managing the promise lifecycle is encapsulated.
-
-## Beyond the Basics: Handling Mutations with `useAsync`
-
-The `useAsync` hook above is great for *fetching* data. But what about *mutations* (POST, PUT, DELETE)? For those, you'd typically want to trigger the async operation on demand, say, when a button is clicked.
-
-We can adapt `useAsync` to return a `run` function:
-
-```typescript
-import { useState, useCallback } from 'react';
-
-// ... (AsyncState interface remains the same) ...
-
-function useAsyncFn<T, Args extends any[]>(
-  asyncFunction: (...args: Args) => Promise<T>,
-): AsyncState<T> & { run: (...args: Args) => Promise<T | undefined> } {
-  const [state, setState] = useState<AsyncState<T>>({
-    data: null,
-    loading: false,
-    error: null,
-  });
-
-  const run = useCallback(async (...args: Args) => {
-    setState({ data: null, loading: true, error: null });
-    try {
-      const result = await asyncFunction(...args);
-      setState({ data: result, loading: false, error: null });
-      return result; // Return the result for chaining or further actions
-    } catch (err: any) {
-      setState({ data: null, loading: false, error: err });
-      throw err; // Re-throw to allow component to catch if needed
-    }
-  }, [asyncFunction]); // Depend on asyncFunction, which should be stable (e.g., from useCallback in component)
-
-  return { ...state, run };
-}
-```
-
-Now, in your component:
-
-```typescript
-function UserCreationForm() {
-  const { loading, error, run } = useAsyncFn(async (userName: string) => {
-    const response = await fetch('/api/users', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name: userName }),
-    });
-    if (!response.ok) throw new Error('Failed to create user');
-    return response.json();
-  });
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget as HTMLFormElement);
-    const userName = formData.get('userName') as string;
-    try {
-      await run(userName);
-      alert('User created!');
-      // Optionally reset form or navigate
-    } catch (err) {
-      // Error handled by hook state, but we could do more here
-    }
+  // Problematic: This function changes on every render because clickCount changes
+  const handleUserClick = () => {
+    setClickCount(prev => prev + 1);
+    trackAnalytics({ id: userId, action: 'userClicked', timestamp: Date.now() });
   };
 
+  // If we add handleUserClick here, this effect re-runs every time clickCount changes,
+  // even though we only want to log when userId changes.
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => {
+    console.log(`User ID changed to ${userId}. Initializing tracking.`);
+    // What if we want to log something with the *latest* clickCount here?
+    // E.g., trackAnalytics({ id: userId, action: 'init', timestamp: Date.now(), clicks: clickCount });
+    // If handleUserClick were referenced here, and we added it to dependencies,
+    // the effect would re-run whenever handleUserClick changed, which is often.
+  }, [userId]); // Only track userId changes
+
   return (
-    <form onSubmit={handleSubmit}>
-      <input name="userName" type="text" placeholder="New user name" disabled={loading} />
-      <button type="submit" disabled={loading}>
-        {loading ? 'Creating...' : 'Create User'}
-      </button>
-      {error && <p style={{ color: 'red' }}>{error.message}</p>}
-    </form>
+    <div>
+      <p>Current User ID: {userId}</p>
+      <p>Click Count: {clickCount}</p>
+      <button onClick={handleUserClick}>Click Me</button>
+    </div>
   );
 }
 ```
 
-This `useAsyncFn` pattern is incredibly powerful for actions, form submissions, and any scenario where the promise execution is user-triggered.
+In this example, if `handleUserClick` was called within an effect that *should* only react to `userId`, adding `handleUserClick` to that effect's dependency array would cause it to re-run whenever `clickCount` updates. This is because `handleUserClick` recreates itself on every render due to its dependency on `setClickCount`. Even if you wrap `handleUserClick` in `useCallback`, you're still forced to include `clickCount` (or `setClickCount` which is stable) in its dependencies, which might not be what you want for a different effect.
+
+The fundamental issue is that `useEffect`'s dependency array expects a stable reference. When a function needs to access the latest state/props but *not* cause the effect to re-run just because those state/props changed, we have a dilemma. `useCallback` helps with memoizing the function *itself*, but its dependencies still dictate its stability.
+
+## The `useEffectEvent` Solution: Decoupling Logic from Effect Triggers
+
+The `useEffectEvent` pattern (which is an RFC for a future React hook called `useEvent`) provides an elegant way to solve this. The core idea is to create a stable *reference* to an event handler, while allowing that handler to *always* read the latest props and state without causing re-renders of the effect it's used in.
+
+It separates two concerns:
+1.  **When** the effect should run (its dependencies).
+2.  **What** the effect does (the logic, which might depend on latest state/props).
+
+Here's how we can implement a `useEvent` helper hook ourselves using `useRef` and `useLayoutEffect`:
+
+```typescript
+import React, { useRef, useLayoutEffect, useCallback } from 'react';
+
+// A custom hook implementing the useEffectEvent pattern
+function useEvent<T extends (...args: any[]) => any>(handler: T): T {
+  const handlerRef = useRef<T>(handler);
+
+  // Use a layout effect to update the ref *before* the browser paints.
+  // This ensures the ref always points to the latest handler.
+  // We use useLayoutEffect because it runs synchronously after all DOM mutations
+  // but before the browser has a chance to paint. This avoids tearing.
+  useLayoutEffect(() => {
+    handlerRef.current = handler;
+  }, [handler]); // This effect updates the ref whenever the handler function itself changes
+
+  // Return a stable function that calls the latest handler from the ref.
+  // This wrapper function itself is stable, so it can be safely used in useEffect's dependencies.
+  const stableHandler = useCallback((...args: Parameters<T>): ReturnType<T> => {
+    return handlerRef.current(...args);
+  }, []); // Empty dependency array makes this wrapper stable
+
+  return stableHandler as T;
+}
+```
+
+## How to Use `useEvent`
+
+Now, let's refactor our `UserActivityLogger` to use this custom `useEvent` hook:
+
+```typescript
+import React, { useEffect, useState } from 'react';
+// Assume useEvent is imported from our custom hook file
+
+type UserEvent = {
+  id: string;
+  action: string;
+  timestamp: number;
+  data?: Record<string, any>;
+};
+
+function trackAnalytics(event: UserEvent) {
+  console.log('Tracking analytics:', event);
+  // In a real app, this would send data to a service
+}
+
+function UserActivityLogger({ userId }: { userId: string }) {
+  const [clickCount, setClickCount] = useState(0);
+
+  // This handler still captures latest clickCount and userId
+  const handleUserInteraction = useEvent(() => {
+    setClickCount(prev => prev + 1); // This part is still mutable
+    trackAnalytics({ 
+      id: userId, 
+      action: 'userInteraction', 
+      timestamp: Date.now(), 
+      data: { currentClicks: clickCount } 
+    });
+  });
+
+  // Now, use this stable event reference inside an effect
+  useEffect(() => {
+    const handleScroll = () => {
+      // The `handleUserInteraction` reference is stable,
+      // but when called, it uses the *latest* `userId` and `clickCount`
+      // from the component's render scope where it was defined.
+      handleUserInteraction();
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [handleUserInteraction]); // handleUserInteraction is stable, so this effect runs only once!
+
+  // We can also use it directly as an event handler
+  return (
+    <div>
+      <p>Current User ID: {userId}</p>
+      <p>Click Count: {clickCount}</p>
+      <button onClick={handleUserInteraction}>Click Me & Track</button>
+      <p>Scroll down to trigger an effect-bound interaction.</p>
+    </div>
+  );
+}
+```
+
+Notice the magic: `handleUserInteraction` is a function that `useEvent` returns. This returned function has a stable identity, meaning it doesn't change on every render. Because of this, when we put it into `useEffect`'s dependency array, the effect will only run *once* (or rather, when `userId` or other *actual* dependencies of the *effect itself* change, which is not the case for `handleUserInteraction` as it has an empty dependency array for its `useCallback` wrapper). Yet, when `handleUserInteraction` is *called*, it will execute the *latest* version of the original function you passed to `useEvent`, which has access to the current `userId` and `clickCount`.
+
+## Insights and What Most Tutorials Miss
+
+This pattern isn't just a hack; it represents a fundamental shift in how we think about effects and event handlers.
+
+1.  **Separation of Concerns:** `useEffect` should declare *when* something happens. The `useEvent` pattern allows the *what* to be fully dynamic, accessing the very latest state and props, without dictating the *when*. This clarifies your `useEffect` dependencies immensely.
+2.  **Predictability:** Effects become far more predictable. If your effect needs to react to changes in `propA` and `propB`, and call a function `doSomething`, `doSomething` doesn't need to be in the dependencies if it's wrapped in `useEvent`. The effect only re-runs for `propA` and `propB`.
+3.  **Performance & Bug Reduction:** No more unnecessary effect re-runs. No more stale closures because `useEvent` ensures the executed function always reads from the latest render scope.
+4.  **Not for Memoization:** This is crucial. `useEvent` is *not* a replacement for `useCallback` for general memoization of functions to prevent child component re-renders. Its primary purpose is to provide a stable function *reference* for `useEffect` dependencies, while internally always invoking the *latest* version of the logic.
 
 ## Pitfalls to Avoid
 
-1.  **Forgetting `useCallback` for `asyncFunction`:** If `asyncFunction` itself isn't stable (e.g., if it's an inline arrow function that recreates on every render), `useAsync` (the fetching one) will re-run continuously, leading to infinite loops or unnecessary fetches. Always wrap functions passed to `useEffect` or `useAsync` in `useCallback` if they have dependencies or need to be stable.
-2.  **Missing `didCancel` (or `AbortController`):** This is the most common pitfall. Without a cleanup mechanism, you're opening yourself up to race conditions and attempting to `setState` on unmounted components. While `didCancel` works, for actual network requests, the `AbortController` API is even more robust as it can truly cancel the underlying fetch request, saving network resources. (A `useAsync` hook with `AbortController` is slightly more complex but highly recommended for production.)
-3.  **Over-fetching Dependencies:** Be mindful of what you include in your `dependencies` array for `useAsync`. If a dependency changes too often, your effect will re-run unnecessarily.
-4.  **Not Handling All States:** Always account for `loading`, `error`, and `data` in your component's render logic. A blank screen or cryptic error message is poor UX.
+*   **Overuse:** Not every function needs to be `useEvent`-wrapped. If a function's dependencies are naturally stable, or if you *do* want the effect to re-run when the function's captured values change, a plain `useCallback` might be perfectly fine, or no memoization at all.
+*   **Misunderstanding `useLayoutEffect`:** The use of `useLayoutEffect` is critical here to ensure the `handlerRef` is updated synchronously before the browser repaints. This prevents "tearing" where an event handler might briefly point to an older version of the function if `useEffect` (which is asynchronous) were used.
+*   **RFC Status:** Remember, `useEvent` is still an RFC (Request for Comments) for a built-in React hook. While you can implement it yourself as shown, the official API might vary slightly, and its availability is not guaranteed in every React version. For production, consider using a well-vetted library implementation or stick to this pattern knowing its experimental nature.
 
-## Final Thoughts
+## Key Takeaways
 
-Adopting a custom hook pattern for promise handling in React isn't just a "nice-to-have"; it's a critical strategy for building robust, maintainable, and scalable applications. It centralizes complex logic, enhances reusability, improves readability, and most importantly, bakes in best practices like handling race conditions and preventing memory leaks.
-
-In my experience, teams that embrace this pattern spend less time debugging async-related issues and more time building features. So, next time you find yourself wiring up `useState` and `useEffect` for a promise, take a step back. Could this be a custom hook? Chances are, the answer is a resounding "yes." Your future self, and your teammates, will thank you.
+The `useEffectEvent` pattern, implemented via `useEvent`, is a powerful tool to bring clarity and stability to your `useEffect` hooks. It frees you from the tyranny of constantly changing function dependencies, allowing your effects to truly represent *when* they should react, while the event handler itself always has access to the freshest data. In my experience, adopting this pattern dramatically cleans up complex components and makes reasoning about side effects much easier. Give it a try; your `useEffect` hooks will thank you!
