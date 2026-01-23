@@ -1,33 +1,10 @@
-# REVIEW: Amritsar to Delhi Cab | Affordable & Safe Cab Booking
+---
+title: "Amritsar to Delhi Cab | Affordable & Safe Cab Booking"
+description: "Crafting Seamless Journeys: Building a Cab Booking App with Next.js and..."
+pubDate: "Jan 23 2026"
+heroImage: "../../assets/amritsar-to-delhi-cab---affordable---safe-cab-book.jpg"
+---
 
-**Primary Tech:** Missing
-
-## 🎥 Video Script
-Hey everyone! Ever found yourself in Amritsar, needing to get to Delhi, and you pull out your phone, tap a few buttons, and boom – cab booked? Seems simple, right? Here’s the thing: that seamless experience is a masterclass in engineering, a symphony of frontend and backend working perfectly.
-
-I remember this one time, I was trying to book a last-minute flight, and the booking flow just *choked*. Buttons didn't respond, the price kept changing, and finally, it just crashed. It was infuriating. That 'aha!' moment for me was realizing just how much trust we put into these digital services, and how easily that trust can be broken if the underlying architecture isn't rock solid.
-
-Building something like an "Amritsar to Delhi Cab" booking platform isn't just about a pretty UI. It's about resilient routing, real-time data sync, secure transactions, and a fault-tolerant system that handles everything from fluctuating prices to driver availability. If you’re ever tackling a project with critical user journeys, remember: prioritize the robustness of your data flow and state management. Your users — and your business — will thank you.
-
-## 🖼️ Image Prompt
-A minimalist, professional image with a dark background (#1A1A1A) and gold accents (#C9A227). The central element is an abstract representation of the Next.js "N" logo, stylized with flowing gold lines suggesting routes and data paths. One side of the 'N' subtly glows gold, representing server-side processing, while the other side has lighter, more dynamic gold particles, symbolizing client-side interaction. Interconnected gold nodes and subtle arrow trails emanate from the 'N', depicting component structure and data flow, with some paths converging towards a faint, abstract map-like pattern. A subtle, minimalist speedometer icon with a lightning bolt integrated into its needle, rendered in gold, is positioned to the side, signifying performance and speed. The overall aesthetic is elegant, tech-focused, and conveys dynamic web application development for complex user journeys.
-
-## 🐦 Expert Thread
-1/ Building a "simple" cab booking app for Amritsar to Delhi? Think again. The surface simplicity hides an iceberg of real-time data, routing algorithms, payment integrations & error handling. It's a masterclass in distributed systems. #NextJS #SoftwareEngineering
-
-2/ Why @nextjs for booking platforms? Its hybrid rendering (SSR for initial load, CSR for interactivity) is gold. First impressions are critical, especially when users are stressed about travel. Fast initial paint = higher conversion. #WebDev #Performance
-
-3/ TypeScript isn't just "nice to have" for cab booking; it's non-negotiable. Booking IDs, prices, driver status – critical data needs strict contracts. Saved me from countless runtime bugs that would've cost real users real frustration. #TypeScript #Frontend
-
-4/ State management for a cab app? It's a state *machine*. Search -> Select -> Confirm -> Track. Each transition needs careful handling. Don't let prop drilling or inconsistent updates turn a smooth ride into a bumpy one. Context API or dedicated state libraries are your friends. #React #StateManagement
-
-5/ Performance isn't a feature; it's a prerequisite. A slow map, a lagging button during payment? Instant user abandonment. Optimize image loading, lazy load heavy components. Every millisecond counts when someone's trying to catch a train. #WebPerformance #UX
-
-6/ The core lesson from building real-world services: "What if it fails?" Design for graceful degradation. Last known location beats a blank map. Partial functionality beats a crash. Trust is earned in reliability. #SystemDesign #Resilience
-
-7/ What's the biggest *non-technical* challenge you've faced when building apps that impact real-world logistics or services? Is it user expectations, edge cases, or something else entirely? Curious to hear your takes! 👇 #DevCommunity #ProductDevelopment
-
-## 📝 Blog Post
 # Crafting Seamless Journeys: Building a Cab Booking App with Next.js and TypeScript
 
 Have you ever been stranded? Maybe after a late flight, or in an unfamiliar city, desperately trying to book a ride? The feeling when an app just *works* – quickly finds a cab, gives you a clear ETA, and handles payment without a hitch – is pure relief. Conversely, the frustration when it glitches, lags, or crashes can ruin your day.
